@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from './../shared/services/repository.service';
+import { Observable } from "rxjs"
 
 @Component({
   selector: 'app-customer',
@@ -8,8 +9,8 @@ import { RepositoryService } from './../shared/services/repository.service';
 })
 export class CustomerComponent implements OnInit {
   
-  public firstName : string;
-  public lastName : string;
+  public firstName$ : Observable<string>;
+  public lastName$ : Observable<string>;
   
   constructor(private repo: RepositoryService) { }
 
@@ -21,8 +22,8 @@ export class CustomerComponent implements OnInit {
       let apiAddress: string = "values";
       this.repo.getData(apiAddress)
         .subscribe(res => {
-            this.firstName = res[0];
-            this.lastName = res[1];
+            this.firstName$ = res[0];
+            this.lastName$ = res[1];
         });
   }
 }
