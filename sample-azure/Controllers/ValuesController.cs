@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using sample_azure.Data;
 
 namespace sample_azure.Controllers
 {
@@ -10,11 +11,19 @@ namespace sample_azure.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private AzureContext dbContext;
+
+        public ValuesController(AzureContext dbc)
+        {
+            dbContext = dbc;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var firstCustomer = dbContext.Customers.FirstOrDefault();
+            return new string[] { firstCustomer.FirstName, firstCustomer.LastName };
         }
 
         // GET api/values/5
